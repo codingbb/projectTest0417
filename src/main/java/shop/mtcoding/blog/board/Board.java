@@ -30,11 +30,13 @@ public class Board {
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
+    //애는 보드 오너
     @Transient
     private Boolean isOwner;
-//
-//    @OneToMany(mappedBy = "board")
-//    private List<Reply> replies = new ArrayList<>();
+
+    @OrderBy("id desc")
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Reply> replies = new ArrayList<>();
 
     @Builder
     public Board(Integer id, String title, String content, User user, Timestamp createdAt) {

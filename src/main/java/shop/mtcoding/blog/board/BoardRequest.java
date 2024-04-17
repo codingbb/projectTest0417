@@ -14,38 +14,57 @@ public class BoardRequest {
         private Integer id;
         private String title;
         private String content;
-        private Integer userId;
-        private String username;
-        private Boolean isBoardOwner;
-        private Boolean isReplyOwner;
+        private UserDTO user;
+        private Boolean isOwner;    //board 오너
         private List<ReplyDTO> replies = new ArrayList<>();
 
-        public DetailDTO(Integer id, String title, String content, Integer userId, String username, Boolean isBoardOwner, Boolean isReplyOwner, List<ReplyDTO> replies) {
-            this.id = id;
-            this.title = title;
-            this.content = content;
-            this.userId = userId;
-            this.username = username;
-            this.isBoardOwner = isBoardOwner;
-            this.isReplyOwner = isReplyOwner;
-            this.replies = replies;
+        public DetailDTO(Board board, User sessionUser, List<Reply> replies) {
+            this.id = board.getId();
+            this.title = board.getTitle();
+            this.content = board.getContent();
+            this.user = new UserDTO(board.getUser());
+            this.isOwner = false;
+
+            if (sessionUser != null) {
+                if (sessionUser.getId() == board.getUser().getId()) {
+                    isOwner = true;
+                }
+            }
+
+            this.replies = replies.stream().map(reply -> new ReplyDTO(reply, sessionUser)).toList();
+
         }
 
         @Data
         public class ReplyDTO {
             private Integer id;
             private String comment;
-
+            private Boolean isReplyOwner;
+            private UserDTO userId;
 
             public ReplyDTO(Reply reply, User sessionUser) {
                 this.id = reply.getId();
                 this.comment = reply.getComment();
-                this.user = new UserDTO(reply);
+                this.isReplyOwner = false;
+
+                if (sessionUser != null) {
+                    if (sessionUser.getId() == reply.getUser().getId()) {
+                        isReplyOwner = true;
+                    }
+                }
             }
         }
 
+        @Data
+        public class UserDTO {
+            private Integer id;
+            private String username;
 
-
+            public UserDTO(User user) {
+                this.id = user.getId();
+                this.username = user.getUsername();
+            }
+        }
 
     }
 

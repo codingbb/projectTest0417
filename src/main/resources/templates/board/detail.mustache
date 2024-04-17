@@ -19,11 +19,12 @@
     <!-- 게시글내용 -->
     <div>
         <h2><b>{{board.title}}</b></h2>
-        <hr />
+        <hr/>
         <div class="m-4 p-2">
             {{board.content}}
         </div>
     </div>
+
 
     <!-- 댓글 -->
     <div class="card mt-3">
@@ -41,28 +42,26 @@
         <div class="card-footer">
             <b>댓글리스트</b>
         </div>
+
+
         <div class="list-group">
+
             <!-- 댓글아이템 -->
             <div class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="d-flex">
                     <div class="px-1 me-1 bg-primary text-white rounded">cos</div>
                     <div>댓글 내용입니다</div>
                 </div>
+                <!--                    여기다 isReplyOwner 걸기 -->
                 <form action="/reply/1/delete" method="post">
                     <button class="btn">🗑</button>
                 </form>
+                <!--여기다가 isReplyOwner 닫기-->
             </div>
-            <!-- 댓글아이템 -->
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-                <div class="d-flex">
-                    <div class="px-1 me-1 bg-primary text-white rounded">ssar</div>
-                    <div>댓글 내용입니다</div>
-                </div>
-                <form action="/reply/1/delete" method="post">
-                    <button class="btn">🗑</button>
-                </form>
-            </div>
+
         </div>
+
+
     </div>
 </div>
 

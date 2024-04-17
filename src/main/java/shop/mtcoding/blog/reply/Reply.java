@@ -31,7 +31,7 @@ public class Reply {
     private LocalDateTime createdAt;
 
     @Transient
-    private Boolean isOwner;
+    private Boolean isReplyOwner;
 
     @Builder
     public Reply(Integer id, String comment, User user, Board board, LocalDateTime createdAt) {

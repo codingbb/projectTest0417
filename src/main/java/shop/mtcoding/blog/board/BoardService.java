@@ -6,6 +6,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import shop.mtcoding.blog._core.errors.exception.Exception403;
 import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.reply.Reply;
+import shop.mtcoding.blog.reply.ReplyJPARepository;
 import shop.mtcoding.blog.user.User;
 
 import java.util.List;
@@ -14,12 +16,15 @@ import java.util.List;
 @Service
 public class BoardService {
     private final BoardJPARepository boardJPARepository;
+    private final ReplyJPARepository replyJPARepository;
 
     public BoardRequest.DetailDTO 게시글상세보기(Integer boardId, User sessionUser) {
         Board board = boardJPARepository.findByIdJoinUser(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없음"));
 
-        return new BoardRequest.DetailDTO(board, sessionUser);
+        List<Reply> replies = replyJPARepository.findByBoardId(boardId);
+
+        return new BoardRequest.DetailDTO(board, sessionUser, replies);
     }
 
 
