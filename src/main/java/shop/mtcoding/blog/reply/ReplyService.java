@@ -16,15 +16,16 @@ public class ReplyService {
     private final BoardJPARepository boardJPARepository;
 
     @Transactional
-    public void 댓글삭제(Integer replyId, Integer sessionUserId) {
+    public void 댓글삭제(User sessionUser, Integer replyId) {
         Reply reply = replyJPARepository.findById(replyId)
-                .orElseThrow(() -> new Exception404("없는 댓글 삭제 불가"));
+                .orElseThrow(() -> new Exception404("없는 댓글은 삭제 불가"));
 
-        if (reply.getUser().getId() != sessionUserId) {
-            throw new Exception403("삭제 권한 없음!");
+        if (reply.getUser().getId() != sessionUser.getId()) {
+            throw new Exception403("삭제 권한이 없음");
         }
 
         replyJPARepository.deleteById(replyId);
+
     }
 
 

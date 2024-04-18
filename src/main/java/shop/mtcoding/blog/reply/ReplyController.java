@@ -16,10 +16,9 @@ public class ReplyController {
     @PostMapping("/board/{boardId}/reply/{replyId}/delete")
     public String delete(@PathVariable Integer boardId, @PathVariable Integer replyId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        replyService.댓글삭제(replyId, sessionUser.getId());
+        replyService.댓글삭제(sessionUser, replyId);
 
         return "redirect:/board/" + boardId;
-
     }
 
 
