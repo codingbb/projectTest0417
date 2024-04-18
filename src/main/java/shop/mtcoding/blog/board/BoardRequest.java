@@ -40,12 +40,13 @@ public class BoardRequest {
             private Integer id;
             private String comment;
             private Boolean isReplyOwner;
-            private UserDTO userId;
+            private UserDTO user;
 
             public ReplyDTO(Reply reply, User sessionUser) {
                 this.id = reply.getId();
                 this.comment = reply.getComment();
                 this.isReplyOwner = false;
+                this.user = new UserDTO(reply.getUser());
 
                 if (sessionUser != null) {
                     if (sessionUser.getId() == reply.getUser().getId()) {

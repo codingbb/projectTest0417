@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import shop.mtcoding.blog._core.errors.exception.Exception404;
+import shop.mtcoding.blog.reply.Reply;
+import shop.mtcoding.blog.reply.ReplyJPARepository;
 import shop.mtcoding.blog.user.User;
 
 import java.util.List;
@@ -21,6 +24,23 @@ public class BoardJPARepositoryTest {
 
     @Autowired
     private EntityManager em;
+
+    @Autowired
+    private ReplyJPARepository replyJPARepository;
+
+    @Test
+    public void findByBoardId_test() {
+        Integer boardId = 4;
+
+        Board board = boardJPARepository.findByIdJoinUser(boardId)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없음"));
+
+        List<Reply> replyList = replyJPARepository.findByBoardId(boardId);
+
+        System.out.println("findByBoardId_test : " + replyList.size());
+
+    }
+
 
     @Test
     public void save_test() {
