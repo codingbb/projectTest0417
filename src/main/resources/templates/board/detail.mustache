@@ -55,7 +55,7 @@
                     </div>
                     <!--                    여기다 isReplyOwner 걸기 -->
                     {{#isReplyOwner}}
-                    <form action="/reply/{{id}}/delete" method="post">
+                    <form action="/board/{{board.id}}/reply/{{id}}/delete" method="post">
                         <button class="btn">🗑</button>
                     </form>
                         {{/isReplyOwner}}
