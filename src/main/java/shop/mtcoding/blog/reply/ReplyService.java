@@ -30,11 +30,11 @@ public class ReplyService {
 
 
     @Transactional
-    public void 댓글쓰기(ReplyRequest.SaveDTO requestDTO, User sessionUser) {
+    public Reply 댓글쓰기(ReplyRequest.SaveDTO requestDTO, User sessionUser) {
         Board board = boardJPARepository.findById(requestDTO.getBoardId())
                         .orElseThrow(() -> new Exception404("없는 게시글에는 댓글 작성 불가"));
 
-        replyJPARepository.save(requestDTO.toEntity(sessionUser, board));
+        return replyJPARepository.save(requestDTO.toEntity(sessionUser, board));
 
     }
 }
