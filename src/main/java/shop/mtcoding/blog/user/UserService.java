@@ -42,14 +42,14 @@ public class UserService {
     }
 
     @Transactional
-    public void 회원가입(UserRequest.JoinDTO requestDTO) {
+    public User 회원가입(UserRequest.JoinDTO requestDTO) {
         Optional<User> userOP = userJPARepository.findByUsername(requestDTO.getUsername());
 
         if (userOP.isPresent()) {
             throw new Exception400("중복된 유저 네임입니다");
         }
 
-        userJPARepository.save(requestDTO.toEntity());
+        return userJPARepository.save(requestDTO.toEntity());
 
     }
 

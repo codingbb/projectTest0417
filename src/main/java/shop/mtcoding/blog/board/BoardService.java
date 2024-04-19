@@ -63,7 +63,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void 게시글업뎃(BoardRequest.UpdateDTO requestDTO, Integer boardId, Integer sessionUserId) {
+    public Board 게시글업뎃(BoardRequest.UpdateDTO requestDTO, Integer boardId, Integer sessionUserId) {
         //게시글 번호 알아야 수정 가능
         //게시글 있는지 확인
         //게시글 쓴 유저만 업뎃 가능
@@ -78,12 +78,14 @@ public class BoardService {
         board.setTitle(requestDTO.getTitle());
         board.setContent(requestDTO.getContent());
 
+        return board;
+
     }
 
     @Transactional
-    public void 게시글쓰기(BoardRequest.SaveDTO requestDTO, User sessionUser) {
-        boardJPARepository.save(requestDTO.toEntity(sessionUser));
-
+    public Board 게시글쓰기(BoardRequest.SaveDTO requestDTO, User sessionUser) {
+        Board board = boardJPARepository.save(requestDTO.toEntity(sessionUser));
+        return board;
     }
 
 }
